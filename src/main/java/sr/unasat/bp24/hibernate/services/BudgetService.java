@@ -1,21 +1,21 @@
 package sr.unasat.bp24.hibernate.services;
 
-import sr.unasat.bp24.hibernate.dao.BudgetDao;
+import sr.unasat.bp24.hibernate.repository.BudgetRepo;
 import sr.unasat.bp24.hibernate.entity.Budget;
 
 public class BudgetService {
 
-    BudgetDao budgetDao;
+    BudgetRepo budgetRepo;
 
     public BudgetService() {
-        budgetDao = new BudgetDao();
+        budgetRepo = new BudgetRepo();
     }
 
     public Budget addMonthlyBudget(Budget budget) {
-        return budgetDao.createMonthlyBudget(budget);
+        return budgetRepo.createMonthlyBudget(budget);
     }
 
     public Budget getMonthlyBudget(Long userId) {
-        return budgetDao.getMonthlyBudget(userId);
+        return budgetRepo.getMonthlyBudget(userId);
     }
 }

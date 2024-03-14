@@ -1,4 +1,4 @@
-package sr.unasat.bp24.hibernate.dao;
+package sr.unasat.bp24.hibernate.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -6,11 +6,13 @@ import jakarta.persistence.TypedQuery;
 import sr.unasat.bp24.hibernate.configuration.JPAConfiguration;
 import sr.unasat.bp24.hibernate.entity.User;
 
-public class UserDao {
+import java.util.List;
+
+public class UserRepo {
     private EntityManager entityManager;
     private EntityTransaction transaction = null;
 
-    public UserDao() {
+    public UserRepo() {
         this.entityManager = JPAConfiguration.getEntityManager();
     }
 

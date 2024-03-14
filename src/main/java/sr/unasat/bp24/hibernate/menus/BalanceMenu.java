@@ -35,11 +35,11 @@ public class BalanceMenu {
 
         boolean withinBudget = false;
 
-        if (balance > 0) {
+        if (monthlyBudget.getAmount() > totalExpensesAmount) {
             withinBudget = true;
         }
 
-        if (balance == 0) {
+        if (monthlyBudget.getAmount()== totalExpensesAmount) {
             withinBudget = true;
         }
 
@@ -58,6 +58,8 @@ public class BalanceMenu {
                     + CYAN_BOLD + "     Balance\r\n"
                     + CYAN_BOLD + "╚═══════════════════╝\r\n"
                     + CYAN_BOLD + "Current Balance: SRD " + balance + "\r\n"
+                    + CYAN_BOLD + "Total Monthly Income : SRD " + totalIncomeAmount + "\r\n"
+                    + CYAN_BOLD + "Total Monthly Expenses: SRD " + totalExpensesAmount + "\r\n"
                     + CYAN_BOLD + "Current Month:  " + monthlyBudget.getBudgetMonth().getMonth() + "\r\n"
                     + CYAN_BOLD + "Monthly Budget: " + monthlyBudget.getAmount() + "\r\n\n"
                     + CYAN_BOLD + "You are " + budgetOverUnderText + "\r\n"

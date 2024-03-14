@@ -1,7 +1,7 @@
 package sr.unasat.bp24.hibernate.services;
 
-import sr.unasat.bp24.hibernate.dao.IncomeDao;
-import sr.unasat.bp24.hibernate.dao.TransactionDao;
+import sr.unasat.bp24.hibernate.repository.IncomeRepo;
+import sr.unasat.bp24.hibernate.repository.TransactionRepo;
 import sr.unasat.bp24.hibernate.entity.Income;
 import sr.unasat.bp24.hibernate.entity.Transaction;
 
@@ -9,43 +9,76 @@ import java.util.List;
 
 public class IncomeService {
 
-    IncomeDao incomeDao;
+    IncomeRepo incomeRepo;
 
     public IncomeService() {
-        incomeDao = new IncomeDao();
+        incomeRepo = new IncomeRepo();
     }
 
     public void addMonthlyIncome(Transaction transaction) {
-        TransactionDao transactionDao = new TransactionDao();
-        transactionDao.addMonthlyIncome(transaction);
+        TransactionRepo transactionRepo = new TransactionRepo();
+        transactionRepo.addMonthlyIncome(transaction);
     }
 
-    public List<Income> getTotalIcome(Long userId) {
-       return incomeDao.getTotalIcome(userId);
+    public List<Income> getTotalIncome(Long userId) {
+       return incomeRepo.getTotalIncome(userId);
     }
 
     public double getTotalIncomeAmount (Long userId) {
 
-        List<Income> incomeList = getTotalIcome(userId);
+        List<Income> incomeList = getTotalIncome(userId);
 
-        double totalIcome = 0.0;
+        double totalIncome = 0.0;
 
         for (Income income : incomeList) {
-            totalIcome += income.getAmount();
+            totalIncome += income.getAmount();
         }
 
-        return totalIcome;
+        return totalIncome;
     }
 
-    public Income getIncomeById(int selectedIncome) {
-       return incomeDao.getIncomeById(selectedIncome);
+    public Income getIncomeById(Long selectedIncome) {
+       return incomeRepo.getIncomeById(Math.toIntExact(selectedIncome));
     }
 
-    public Income updateIcome(Income income) {
-        return incomeDao.updateIcome(income);
+    public void updateMonthlyIncome(Transaction transaction) {
+        TransactionRepo transactionRepo = new TransactionRepo();
+        transactionRepo.updateTransaction(transaction);
     }
-
+    
     public void delete(Income selectedIncome) {
-        incomeDao.delete(selectedIncome);
+        incomeRepo.delete(selectedIncome);
+    }
+
+    public Transaction updateTransaction(Transaction transaction) {
+        TransactionRepo transactionRepo = new TransactionRepo();
+        return transactionRepo.updateTransaction(transaction);
+    }
+
+    public Transaction getTransactionById(Long transactionId) {
+        TransactionRepo transactionRepo = new TransactionRepo();
+        return transactionRepo.getTransactionById(transactionId);
+    }
+
+    public Income updateIncome(Income income) {
+        IncomeRepo incomeRepo = new IncomeRepo();
+        return incomeRepo.updateIncome(income);
+    }
+    public void updateTransactionAndIncome(Transaction transaction, Income income) {
+        TransactionRepo transactionRepo = new TransactionRepo();
+        transactionRepo.updateTransaction(transaction);
+
+        IncomeRepo incomeRepo = new IncomeRepo();
+        incomeRepo.updateIncome(income);
+    }
+    public void deleteIncomeAndTransaction(Income selectedIncome) {
+        Transaction transaction = selectedIncome.getTransaction();
+
+        // Call the delete method in TransactionRepo to delete the associated transaction
+        TransactionRepo transactionRepo = new TransactionRepo();
+        transactionRepo.deleteTransaction(transaction);
+
+        // Now, delete the income from the IncomeRepo
+        incomeRepo.delete(selectedIncome);
     }
 }

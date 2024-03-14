@@ -1,6 +1,6 @@
 package sr.unasat.bp24.hibernate.services;
 
-import sr.unasat.bp24.hibernate.dao.UserDao;
+import sr.unasat.bp24.hibernate.repository.UserRepo;
 import sr.unasat.bp24.hibernate.entity.User;
 
 import java.util.Scanner;
@@ -9,10 +9,10 @@ import static sr.unasat.bp24.hibernate.FinanceTracker.*;
 
 public class AuthenticationService {
 
-    UserDao dao;
+    UserRepo dao;
 
     public AuthenticationService() {
-        dao = new UserDao();
+        dao = new UserRepo();
     }
 
     public User userLoginAuthentication() {

@@ -1,4 +1,4 @@
-package sr.unasat.bp24.hibernate.dao;
+package sr.unasat.bp24.hibernate.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -8,16 +8,16 @@ import sr.unasat.bp24.hibernate.entity.Income;
 
 import java.util.List;
 
-public class IncomeDao {
+public class IncomeRepo {
 
     private EntityManager entityManager;
     private EntityTransaction transaction = null;
 
-    public IncomeDao() {
+    public IncomeRepo() {
         this.entityManager = JPAConfiguration.getEntityManager();
     }
 
-    public List<Income> getTotalIcome(Long userId) {
+    public List<Income> getTotalIncome(Long userId) {
 
         entityManager.getTransaction().begin();
 
@@ -60,7 +60,7 @@ public class IncomeDao {
         return income;
     }
 
-    public Income updateIcome(Income income) {
+    public Income updateIncome(Income income) {
 
         try {
             //get a transaction
@@ -93,7 +93,9 @@ public class IncomeDao {
                 transaction.begin();
             }
 
-            entityManager.remove(selectedIncome);
+            Income income = entityManager.find(Income.class, selectedIncome.getIncomeId());
+
+            entityManager.remove(income);
 
             //commit the transaction
             transaction.commit();

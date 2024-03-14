@@ -6,6 +6,7 @@ import sr.unasat.bp24.hibernate.entity.Transaction;
 import sr.unasat.bp24.hibernate.entity.User;
 import sr.unasat.bp24.hibernate.services.CategoryService;
 import sr.unasat.bp24.hibernate.services.IncomeService;
+import sr.unasat.bp24.hibernate.services.ExtraFeature;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -67,11 +68,11 @@ public class IncomeMenu {
 
         viewTotalIncome();
 
-        System.out.println("Enter a income id:");
+        System.out.println("Enter an income id:");
 
         int selectedIncome = sc.nextInt();
 
-        Income savedIncome = incomeService.getIncomeById(selectedIncome);
+        Income savedIncome = incomeService.getIncomeById((long) selectedIncome);
 
         incomeService.delete(savedIncome);
 
@@ -85,7 +86,7 @@ public class IncomeMenu {
         System.out.println("Enter a income id:");
         int selectedIncome = sc.nextInt();
 
-        Income savedIncome = incomeService.getIncomeById(selectedIncome);
+        Income savedIncome = incomeService.getIncomeById((long) selectedIncome);
 
         System.out.println("Enter update details:");
 
@@ -106,9 +107,9 @@ public class IncomeMenu {
                 savedIncome.setDescription(source);
                 savedIncome.setUser(user);
 
-                Income updatedIcome = incomeService.updateIcome(savedIncome);
+                Income updatedIncome = incomeService.updateIncome(savedIncome);
 
-                System.out.println("\nIncome updated successfully: " + updatedIcome.getDescription() + " - SRD " + updatedIcome.getAmount());
+                System.out.println("\nIncome updated successfully: " + updatedIncome.getDescription() + " - SRD " + updatedIncome.getAmount());
 
                 validInput = true;
 
@@ -138,9 +139,12 @@ public class IncomeMenu {
                 System.out.println("Select a Category");
                 Category selectCategory = CategoryService.selectCategory();
 
+                LocalDate incomeDate = ExtraFeature.selectDate();
+
+
                 Transaction transaction = new Transaction();
                 transaction.setAmount(amount);
-                transaction.setDate(LocalDate.now());
+                transaction.setDate(incomeDate);
                 transaction.setUser(user);
                 transaction.setCategory(selectCategory);
 
@@ -149,7 +153,9 @@ public class IncomeMenu {
                 income.setDescription(source);
                 income.setUser(user);
 
-                income.setTransactions(transaction);
+                income.setIncomeDate(transaction.getDate());
+
+                income.setTransaction(transaction);
                 transaction.setIncome(income);
 
                 incomeService.addMonthlyIncome(transaction);
@@ -166,14 +172,14 @@ public class IncomeMenu {
     }
 
     void viewTotalIncome() {
-        List<Income> incomeList = incomeService.getTotalIcome(user.getUserId());
+        List<Income> incomeList = incomeService.getTotalIncome(user.getUserId());
 
         System.out.printf("%-10s%-20s%-10s%-20s%-15s\n", "IncomeId", "Transactions", "Amount", "Description", "IncomeDate");
         System.out.println("--------------------------------------------------------------------------------------------");
 
         String format = "%-10d%-20s%-10.2f%-20s%-15s";
 
-        double totalIcome = 0.0;
+        double totalIncome = 0.0;
 
         for (Income income : incomeList) {
 
@@ -185,9 +191,9 @@ public class IncomeMenu {
                     income.getDescription(), income.getIncomeDate());
             System.out.println(); // Move to the next line for the next record
 
-            totalIcome += income.getAmount();
+            totalIncome += income.getAmount();
         }
-        System.out.println("\nTotal Income: " + totalIcome);
+        System.out.println("\nTotal Income: " + totalIncome);
     }
 
     public double getTotalIncome() {

@@ -18,6 +18,9 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     private List<Transaction> transactions = new ArrayList<>();
 
+    /*@ManyToMany(mappedBy = "categories")
+    private List<User> users = new ArrayList<>();*/
+
     public Long getCategoryId() {
         return categoryId;
     }

@@ -30,25 +30,25 @@ public class ExpenseObserver implements Observer {
 
         boolean withinBudget = false;
 
-        if (balance > 0) {
+        if (monthlyBudget.getAmount() > totalExpensesAmount) {
             withinBudget = true;
         }
 
-        if (balance == 0) {
+        if (monthlyBudget.getAmount() == totalExpensesAmount) {
             withinBudget = true;
         }
 
         String budgetOverUnderText = "";
 
         if (withinBudget) {
-            budgetOverUnderText = "with in your budget";
+            budgetOverUnderText = "within your budget";
             System.out.println("You are " + budgetOverUnderText);
         } else {
-            budgetOverUnderText = "over your budget";
+            budgetOverUnderText = "over your budget !";
 
             System.out.println("You are " + balance + " " + budgetOverUnderText);
 
-            System.out.println("Your monthy budget for the month " +
+            System.out.println("Your monthly budget for the month " +
                     monthlyBudget.getBudgetMonth().getMonth() + " is " + monthlyBudget.getAmount());
 
             System.out.println("You total expenses for the month " + monthlyBudget.getBudgetMonth().getMonth() + " are "

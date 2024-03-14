@@ -1,5 +1,6 @@
 package sr.unasat.bp24.hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class Expense {
     private Double amount;
     private String description;
     @Column(name = "expense_date")
+    @JsonIgnore
     private LocalDate expenseDate;
 
     @Column(name = "payment_method")
@@ -24,6 +26,7 @@ public class Expense {
 
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")  // This is the foreign key column in the Transactions table
     private User user;
 

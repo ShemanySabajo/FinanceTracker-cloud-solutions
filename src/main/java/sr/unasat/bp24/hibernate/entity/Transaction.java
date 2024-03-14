@@ -1,5 +1,6 @@
 package sr.unasat.bp24.hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -11,14 +12,17 @@ public class Transaction {
     @GeneratedValue
     private Long transactionId;
 
+    @JsonIgnore
     private LocalDate date;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")  // This is the foreign key column in the Transactions table
     private User user;
 
     @ManyToOne
     @JoinColumn(name ="category_id")
+    @JsonIgnore
     private Category category;
 
     private Double amount;

@@ -1,6 +1,6 @@
 package sr.unasat.bp24.hibernate.services;
 
-import sr.unasat.bp24.hibernate.dao.CategoryDao;
+import sr.unasat.bp24.hibernate.repository.CategoryRepo;
 import sr.unasat.bp24.hibernate.entity.Category;
 
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class CategoryService {
 
     public static List<Category> getAllCategories() {
-        CategoryDao categoryDao = new CategoryDao();
-        return categoryDao.getAllCategories();
+        CategoryRepo categoryRepo = new CategoryRepo();
+        return categoryRepo.getAllCategories();
     }
 
     public static Category selectCategory() {

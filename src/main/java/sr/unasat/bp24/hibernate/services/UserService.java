@@ -1,16 +1,14 @@
 package sr.unasat.bp24.hibernate.services;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import sr.unasat.bp24.hibernate.dao.UserDao;
+import sr.unasat.bp24.hibernate.repository.UserRepo;
 import sr.unasat.bp24.hibernate.entity.User;
 
 import java.util.Scanner;
 
 public class UserService {
-    UserDao dao;
+    UserRepo dao;
     public UserService() {
-        dao = new UserDao();
+        dao = new UserRepo();
     }
 
     public void registerUser() {

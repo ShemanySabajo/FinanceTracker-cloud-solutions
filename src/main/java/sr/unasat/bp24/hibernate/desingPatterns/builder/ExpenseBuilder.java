@@ -50,7 +50,6 @@ public class ExpenseBuilder {
     }
 
     public Expense build() {
-        // You can perform additional validations here if needed
         return expense;
     }
 

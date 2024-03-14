@@ -93,6 +93,7 @@ public class ExpensesMenu {
                 transaction.setUser(user);
                 transaction.setCategory(selectCategory);
 
+                //expense builder
                 Expense expense = new ExpenseBuilder()
                         .transaction(transaction)
                         .amount(amount)

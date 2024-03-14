@@ -1,5 +1,6 @@
 package sr.unasat.bp24.hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,14 +11,16 @@ public class Income {
     @GeneratedValue
     @Column(name = "income_id")
     private Long incomeId;
-    @OneToOne(mappedBy = "income")
+    @OneToOne(mappedBy = "income", cascade = CascadeType.REMOVE)
     private Transaction transaction;
     private Double amount;
     private String description;
     @Column(name = "income_date")
+    @JsonIgnore
     private LocalDate incomeDate;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")  // This is the foreign key column in the Transactions table
     private User user;
 
@@ -31,10 +34,6 @@ public class Income {
 
     public Transaction getTransaction() {
         return transaction;
-    }
-
-    public void setTransactions(Transaction transaction) {
-        this.transaction = transaction;
     }
 
     public Double getAmount() {
@@ -66,5 +65,10 @@ public class Income {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+
     }
 }

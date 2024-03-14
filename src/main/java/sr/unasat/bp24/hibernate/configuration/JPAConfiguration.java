@@ -7,22 +7,28 @@ import jakarta.persistence.Persistence;
 public class JPAConfiguration {
 
     private static final String PERSISTENCE_UNIT_NAME = "ORM_BP";
-    private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    private static EntityManager entityManager = factory.createEntityManager();
+    private static EntityManagerFactory factory;
 
-    public static EntityManagerFactory getEntityManagerFactory() {
+    // Lazily initialize the EntityManagerFactory
+    private static EntityManagerFactory getEntityManagerFactory() {
+        if (factory == null) {
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        }
         return factory;
     }
 
+    // Get EntityManager instance
     public static EntityManager getEntityManager() {
-        return entityManager;
+        return getEntityManagerFactory().createEntityManager();
     }
 
+    // Shutdown EntityManager and EntityManagerFactory
     public static void shutdown() {
-        if (entityManager != null) {
+        EntityManager entityManager = getEntityManager();
+        if (entityManager != null && entityManager.isOpen()) {
             entityManager.close();
         }
-        if (factory != null) {
+        if (factory != null && factory.isOpen()) {
             factory.close();
         }
     }
